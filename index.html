@@ -1,624 +1,1853 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAVTIM SCRIPT</title>
 
-    <title>DAVTIM SCRIPT — сценарии для коротких видео</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+margin:0;
+background:#070707;
+color:#fff;
+font-family:Arial,Helvetica,sans-serif;
+line-height:1.5
+}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit}
+button{cursor:pointer}
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+.wrap{
+width:min(1180px,92%);
+margin:auto
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #080808;
-            color: #ffffff;
-            line-height: 1.5;
-        }
+header{
+position:sticky;
+top:0;
+z-index:100;
+background:rgba(7,7,7,.88);
+backdrop-filter:blur(18px);
+border-bottom:1px solid #222
+}
 
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 6%;
-            background: rgba(8, 8, 8, 0.9);
-            border-bottom: 1px solid #222;
-        }
+nav{
+height:72px;
+display:flex;
+align-items:center;
+justify-content:space-between
+}
 
-        .logo {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
+.logo{
+font-size:20px;
+font-weight:900;
+letter-spacing:-1px
+}
 
-        nav {
-            display: flex;
-            gap: 30px;
-        }
+.nav{
+display:flex;
+gap:25px;
+color:#999
+}
 
-        nav a {
-            color: #aaa;
-            text-decoration: none;
-        }
+.nav a:hover{color:#fff}
 
-        nav a:hover {
-            color: white;
-        }
+.hero{
+padding:100px 0 80px
+}
 
-        button {
-            border: none;
-            border-radius: 999px;
-            padding: 13px 22px;
-            background: white;
-            color: black;
-            font-weight: 700;
-            cursor: pointer;
-        }
+.small-title{
+color:#777;
+font-size:12px;
+font-weight:700;
+letter-spacing:3px;
+text-transform:uppercase
+}
 
-        .hero {
-            min-height: 85vh;
-            display: flex;
-            align-items: center;
-            padding: 80px 8%;
-        }
+h1{
+font-size:clamp(50px,9vw,110px);
+line-height:.9;
+letter-spacing:-6px;
+margin:20px 0;
+max-width:1000px
+}
 
-        .hero-label {
-            color: #888;
-            font-size: 14px;
-            letter-spacing: 3px;
-            margin-bottom: 25px;
-        }
+.hero p{
+font-size:20px;
+color:#999;
+max-width:650px
+}
 
-        h1 {
-            font-size: clamp(60px, 10vw, 150px);
-            line-height: 0.9;
-            letter-spacing: -6px;
-            max-width: 1000px;
-        }
+.btn{
+border:0;
+background:#fff;
+color:#000;
+padding:14px 20px;
+border-radius:12px;
+font-weight:800
+}
 
-        .hero-text {
-            max-width: 550px;
-            margin-top: 35px;
-            color: #aaa;
-            font-size: 20px;
-        }
+.btn.dark{
+background:#151515;
+color:#fff;
+border:1px solid #333
+}
 
-        .hero button {
-            margin-top: 30px;
-            font-size: 16px;
-            padding: 16px 28px;
-        }
+section{
+padding:80px 0
+}
 
-        section {
-            padding: 100px 6%;
-        }
+.section-title{
+font-size:50px;
+letter-spacing:-3px;
+margin:8px 0 30px
+}
 
-        .section-label {
-            color: #777;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 12px;
-            margin-bottom: 15px;
-        }
+.filters{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:25px
+}
 
-        h2 {
-            font-size: clamp(40px, 6vw, 80px);
-            letter-spacing: -3px;
-            margin-bottom: 50px;
-        }
+.search{
+flex:1;
+min-width:220px;
+padding:14px;
+background:#111;
+color:#fff;
+border:1px solid #333;
+border-radius:12px;
+outline:none
+}
 
-        .products {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
+.filter{
+background:#111;
+color:#999;
+border:1px solid #333;
+padding:11px 15px;
+border-radius:12px
+}
 
-        .product {
-            min-height: 360px;
-            padding: 30px;
-            border: 1px solid #292929;
-            border-radius: 28px;
-            background: linear-gradient(145deg, #151515, #0d0d0d);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: 0.3s;
-        }
+.filter.active{
+background:#fff;
+color:#000
+}
 
-        .product:hover {
-            transform: translateY(-6px);
-            border-color: #555;
-        }
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px
+}
 
-        .product-number {
-            color: #666;
-            font-size: 14px;
-        }
+.card{
+background:#101010;
+border:1px solid #242424;
+border-radius:22px;
+padding:23px;
+min-height:300px;
+display:flex;
+flex-direction:column
+}
 
-        .product h3 {
-            font-size: 30px;
-            margin-top: 80px;
-        }
+.card-label{
+font-size:12px;
+color:#777;
+letter-spacing:2px
+}
 
-        .product p {
-            color: #999;
-            margin-top: 10px;
-        }
+.card h3{
+font-size:25px;
+margin:18px 0 8px
+}
 
-        .price {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 25px 0;
-        }
+.card p{
+color:#999
+}
 
-        .how {
-            border-top: 1px solid #222;
-        }
+.price{
+font-size:30px;
+font-weight:900;
+margin-top:auto;
+margin-bottom:15px
+}
 
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
+.card-buttons{
+display:flex;
+gap:8px
+}
 
-        .step {
-            padding: 30px;
-            border: 1px solid #222;
-            border-radius: 25px;
-        }
+.steps{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px
+}
 
-        .step-number {
-            font-size: 14px;
-            color: #777;
-        }
+.step{
+border-top:1px solid #333;
+padding-top:20px
+}
 
-        .step h3 {
-            font-size: 28px;
-            margin: 40px 0 10px;
-        }
+.step-number{
+color:#777;
+font-size:12px
+}
 
-        .step p {
-            color: #999;
-        }
+.step h3{
+font-size:21px
+}
 
-        .sample {
-            background: #f2f2f2;
-            color: #080808;
-            border-radius: 35px;
-            padding: 50px;
-            max-width: 1000px;
-            margin: auto;
-        }
+.step p{
+color:#888
+}
 
-        .sample h2 {
-            margin-bottom: 30px;
-        }
+details{
+border-top:1px solid #292929;
+padding:22px 0
+}
 
-        .script-part {
-            border-top: 1px solid #ccc;
-            padding: 20px 0;
-        }
+summary{
+cursor:pointer;
+font-weight:700
+}
 
-        .script-part span {
-            display: block;
-            color: #777;
-            font-size: 12px;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-        }
+footer{
+border-top:1px solid #222;
+padding:35px 0;
+color:#777
+}
 
-        .faq {
-            max-width: 800px;
-        }
+.modal{
+display:none;
+position:fixed;
+inset:0;
+z-index:200;
+background:rgba(0,0,0,.8);
+align-items:center;
+justify-content:center;
+padding:15px
+}
 
-        .faq-item {
-            border-top: 1px solid #292929;
-            padding: 25px 0;
-        }
+.modal.show{display:flex}
 
-        .faq-item h3 {
-            font-size: 20px;
-        }
+.modal-box{
+width:min(650px,100%);
+max-height:90vh;
+overflow:auto;
+background:#111;
+border:1px solid #333;
+border-radius:24px;
+padding:25px
+}
 
-        .faq-item p {
-            color: #999;
-            margin-top: 10px;
-        }
+.close{
+float:right;
+background:none;
+border:0;
+color:#888;
+font-size:30px
+}
 
-        footer {
-            border-top: 1px solid #222;
-            padding: 50px 6%;
-            color: #777;
-        }
+.modal-box h2{
+font-size:35px;
+margin-top:5px
+}
 
-        @media (max-width: 800px) {
+.payment{
+background:#181818;
+border:1px solid #333;
+border-radius:16px;
+padding:18px;
+margin:20px 0
+}
 
-            header {
-                padding: 18px 20px;
-            }
+.phone{
+display:flex;
+gap:8px;
+margin-top:12px
+}
 
-            nav {
-                display: none;
-            }
+.phone code{
+flex:1;
+background:#080808;
+padding:13px;
+border-radius:10px;
+overflow:hidden
+}
 
-            .hero {
-                padding: 60px 20px;
-                min-height: 75vh;
-            }
+.notice{
+background:#181818;
+border-radius:12px;
+padding:13px;
+margin:12px 0;
+color:#aaa
+}
 
-            h1 {
-                font-size: 64px;
-                letter-spacing: -4px;
-            }
+.success{color:#8be28f}
+.error{color:#ff8585}
 
-            .hero-text {
-                font-size: 17px;
-            }
+.chat{
+margin-top:25px
+}
 
-            section {
-                padding: 70px 20px;
-            }
+.messages{
+background:#080808;
+border-radius:14px;
+padding:10px;
+max-height:260px;
+overflow:auto;
+margin-top:10px
+}
 
-            .products,
-            .steps {
-                grid-template-columns: 1fr;
-            }
+.message{
+background:#171717;
+padding:10px;
+border-radius:10px;
+margin:7px 0
+}
 
-            .product {
-                min-height: 300px;
-            }
+.message.me{
+background:#fff;
+color:#000
+}
 
-            .sample {
-                padding: 30px 20px;
-                border-radius: 25px;
-            }
-        }
-    </style>
+.chat-row{
+display:flex;
+gap:8px;
+margin-top:8px
+}
+
+.chat-row input{
+flex:1;
+background:#0b0b0b;
+border:1px solid #333;
+color:#fff;
+padding:12px;
+border-radius:10px
+}
+
+.order{
+border:1px solid #333;
+border-radius:15px;
+padding:15px;
+margin-bottom:10px
+}
+
+@media(max-width:800px){
+.grid{grid-template-columns:1fr 1fr}
+.steps{grid-template-columns:1fr 1fr}
+.nav{display:none}
+}
+
+@media(max-width:520px){
+.grid{grid-template-columns:1fr}
+.steps{grid-template-columns:1fr}
+.hero{padding:65px 0}
+h1{letter-spacing:-3px}
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">DAVTIM SCRIPT</div>
+<div class="wrap">
+<nav>
+<div class="logo">DAVTIM SCRIPT</div>
 
-    <nav>
-        <a href="#catalog">Каталог</a>
-        <a href="#how">Как это работает</a>
-        <a href="#faq">FAQ</a>
-    </nav>
-
-    <button onclick="scrollToCatalog()">Каталог</button>
+<div class="nav">
+<a href="#catalog">Каталог</a>
+<a href="#how">Как это работает</a>
+<a href="#faq">FAQ</a>
+<a href="#purchases">Мои покупки</a>
+</div>
+</nav>
+</div>
 </header>
 
+<main>
 
 <section class="hero">
+<div class="wrap">
 
-    <div>
+<div class="small-title">SHORTS / REELS / TIKTOK</div>
 
-        <div class="hero-label">
-            DAVTIM SCRIPT / 2026
-        </div>
+<h1>
+Тебе не нужны<br>
+ещё идеи.<br>
+Тебе нужны<br>
+готовые сценарии.
+</h1>
 
-        <h1>
-            Не думай,<br>
-            что снимать.
-        </h1>
+<p>
+30 готовых сценариев на месяц:
+хук, что говорить, что показывать,
+текст на экране и CTA.
+</p>
 
-        <p class="hero-text">
-            Готовые сценарии для Shorts, Reels и коротких видео.
-            Открыл. Выбрал. Снял.
-        </p>
+<br>
 
-        <button onclick="scrollToCatalog()">
-            Смотреть сценарии
-        </button>
+<a href="#catalog" class="btn">
+Смотреть каталог
+</a>
 
-    </div>
-
+</div>
 </section>
 
 
 <section id="catalog">
+<div class="wrap">
 
-    <div class="section-label">
-        Каталог
-    </div>
+<div class="small-title">КАТАЛОГ</div>
 
-    <h2>
-        Выбери свою нишу.
-    </h2>
+<h2 class="section-title">
+Выбери пакет.
+</h2>
 
-    <div class="products">
+<div class="filters">
 
-        <article class="product">
+<input
+id="search"
+class="search"
+placeholder="Поиск..."
+oninput="renderProducts()"
+>
 
-            <div>
-                <div class="product-number">01 / BUSINESS</div>
+<button class="filter active"
+onclick="setFilter('all',this)">
+Все
+</button>
 
-                <h3>BARBER PACK</h3>
+<button class="filter"
+onclick="setFilter('starter',this)">
+STARTER
+</button>
 
-                <p>
-                    30 сценариев для барберов
-                    и мужских салонов.
-                </p>
-            </div>
+<button class="filter"
+onclick="setFilter('barber',this)">
+BARBER
+</button>
 
-            <div>
-                <div class="price">990 ₽</div>
+<button class="filter"
+onclick="setFilter('cafe',this)">
+CAFE
+</button>
 
-                <button onclick="showProduct('BARBER PACK')">
-                    Подробнее
-                </button>
-            </div>
+<button class="filter"
+onclick="setFilter('expert',this)">
+EXPERT
+</button>
 
-        </article>
+</div>
 
+<div id="products" class="grid"></div>
 
-        <article class="product">
-
-            <div>
-                <div class="product-number">02 / BUSINESS</div>
-
-                <h3>CAFE PACK</h3>
-
-                <p>
-                    30 сценариев для кафе,
-                    ресторанов и кофеен.
-                </p>
-            </div>
-
-            <div>
-                <div class="price">990 ₽</div>
-
-                <button onclick="showProduct('CAFE PACK')">
-                    Подробнее
-                </button>
-            </div>
-
-        </article>
-
-
-        <article class="product">
-
-            <div>
-                <div class="product-number">03 / EXPERT</div>
-
-                <h3>EXPERT PACK</h3>
-
-                <p>
-                    30 сценариев для экспертов
-                    и личных брендов.
-                </p>
-            </div>
-
-            <div>
-                <div class="price">1 490 ₽</div>
-
-                <button onclick="showProduct('EXPERT PACK')">
-                    Подробнее
-                </button>
-            </div>
-
-        </article>
-
-    </div>
-
+</div>
 </section>
 
 
-<section id="how" class="how">
+<section id="how">
+<div class="wrap">
 
-    <div class="section-label">
-        Процесс
-    </div>
+<div class="small-title">ПРОЦЕСС</div>
 
-    <h2>
-        Три шага.
-    </h2>
+<h2 class="section-title">
+Четыре шага.
+</h2>
 
-    <div class="steps">
+<div class="steps">
 
-        <div class="step">
-            <div class="step-number">01</div>
+<div class="step">
+<div class="step-number">01</div>
+<h3>Выбираешь пакет</h3>
+<p>Выбираешь нишу и подходящий набор сценариев.</p>
+</div>
 
-            <h3>Выбираешь</h3>
+<div class="step">
+<div class="step-number">02</div>
+<h3>Создаёшь заказ</h3>
+<p>Система выдаёт уникальный номер заказа.</p>
+</div>
 
-            <p>
-                Находишь набор сценариев
-                под свою нишу.
-            </p>
-        </div>
+<div class="step">
+<div class="step-number">03</div>
+<h3>Оплачиваешь</h3>
+<p>Переводишь точную сумму на ВТБ.</p>
+</div>
 
+<div class="step">
+<div class="step-number">04</div>
+<h3>Получаешь файл</h3>
+<p>После проверки оплаты открывается скачивание.</p>
+</div>
 
-        <div class="step">
-            <div class="step-number">02</div>
-
-            <h3>Получаешь</h3>
-
-            <p>
-                Получаешь готовые идеи,
-                структуру и текст.
-            </p>
-        </div>
-
-
-        <div class="step">
-            <div class="step-number">03</div>
-
-            <h3>Снимаешь</h3>
-
-            <p>
-                Берёшь телефон и
-                превращаешь сценарий в видео.
-            </p>
-        </div>
-
-    </div>
-
+</div>
+</div>
 </section>
 
 
-<section>
+<section id="purchases">
+<div class="wrap">
 
-    <div class="sample">
+<div class="small-title">ДОСТУП</div>
 
-        <div class="section-label">
-            Бесплатный пример
-        </div>
+<h2 class="section-title">
+Мои покупки.
+</h2>
 
-        <h2>
-            Один сценарий.
-        </h2>
+<button class="btn dark"
+onclick="loadPurchases()">
+Обновить
+</button>
 
+<br><br>
 
-        <div class="script-part">
+<div id="purchasesList">
+<div class="notice">
+Пока нет подтверждённых покупок.
+</div>
+</div>
 
-            <span>HOOK</span>
-
-            <strong>
-                «3 ошибки, из-за которых
-                твоя стрижка выглядит хуже»
-            </strong>
-
-        </div>
-
-
-        <div class="script-part">
-
-            <span>ЧТО ПОКАЗАТЬ</span>
-
-            Покажи клиента до и после
-            и коротко объясни разницу.
-
-        </div>
-
-
-        <div class="script-part">
-
-            <span>ЧТО СКАЗАТЬ</span>
-
-            Объясни одну распространённую
-            ошибку и покажи правильный вариант.
-
-        </div>
-
-
-        <div class="script-part">
-
-            <span>CTA</span>
-
-            «Сохрани это видео,
-            чтобы не забыть.»
-
-        </div>
-
-    </div>
-
+</div>
 </section>
 
 
 <section id="faq">
+<div class="wrap">
 
-    <div class="section-label">
-        FAQ
-    </div>
+<div class="small-title">FAQ</div>
 
-    <h2>
-        Частые вопросы.
-    </h2>
+<h2 class="section-title">
+Частые вопросы.
+</h2>
 
-    <div class="faq">
+<details>
+<summary>
+Когда я получу файл?
+</summary>
 
-        <div class="faq-item">
+<p>
+После проверки и ручного подтверждения оплаты.
+</p>
+</details>
 
-            <h3>
-                Что входит в сценарий?
-            </h3>
+<details>
+<summary>
+Что внутри сценария?
+</summary>
 
-            <p>
-                Hook, идея видео, что показать,
-                что сказать, текст на экране и CTA.
-            </p>
+<p>
+Хук, структура ролика, идея съёмки,
+текст на экране и CTA.
+</p>
+</details>
 
-        </div>
+<details>
+<summary>
+Что будет после нажатия «Я оплатил»?
+</summary>
 
+<p>
+Заказ перейдёт на проверку.
+Кнопка не выдаёт товар автоматически.
+</p>
+</details>
 
-        <div class="faq-item">
-
-            <h3>
-                Подойдут ли сценарии для Reels?
-            </h3>
-
-            <p>
-                Да. Сценарии рассчитаны
-                на короткий вертикальный формат.
-            </p>
-
-        </div>
-
-
-        <div class="faq-item">
-
-            <h3>
-                Нужно ли уметь монтировать?
-            </h3>
-
-            <p>
-                Нет. Основная идея продукта —
-                дать понятный план съёмки.
-            </p>
-
-        </div>
-
-    </div>
-
+</div>
 </section>
+
+</main>
 
 
 <footer>
+<div class="wrap">
 
-    <strong>DAVTIM SCRIPT</strong>
+DAVTIM SCRIPT · 2026
 
-    <p>
-        Сценарии для коротких видео.
-    </p>
+<button
+class="btn dark"
+style="float:right"
+onclick="openAdmin()">
+Админ
+</button>
 
-    <br>
-
-    © 2026 DAVTIM SCRIPT
-
+</div>
 </footer>
+
+
+<!-- ORDER MODAL -->
+
+<div id="orderModal" class="modal">
+
+<div class="modal-box">
+
+<button class="close"
+onclick="closeModal('orderModal')">
+×
+</button>
+
+<div id="orderContent"></div>
+
+</div>
+
+</div>
+
+
+<!-- PRODUCT MODAL -->
+
+<div id="productModal" class="modal">
+
+<div class="modal-box">
+
+<button class="close"
+onclick="closeModal('productModal')">
+×
+</button>
+
+<div id="productContent"></div>
+
+</div>
+
+</div>
+
+
+<!-- ADMIN MODAL -->
+
+<div id="adminModal" class="modal">
+
+<div class="modal-box">
+
+<button class="close"
+onclick="closeModal('adminModal')">
+×
+</button>
+
+<div id="adminContent"></div>
+
+</div>
+
+</div>
 
 
 <script>
 
-function scrollToCatalog() {
+/* =====================================
+   НОВЫЙ CLOUDFLARE WORKER
+===================================== */
 
-    document
-        .getElementById("catalog")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
+const API_URL =
+"https://davtim-store-api.mamleev-timurka.workers.dev";
+
+
+/* =====================================
+   ТОВАРЫ
+===================================== */
+
+const PRODUCTS = [
+
+{
+id:"starter",
+name:"STARTER",
+title:"30 сценариев для Shorts",
+price:490,
+description:"30 универсальных сценариев для регулярного контента."
+},
+
+{
+id:"barber",
+name:"BARBER",
+title:"30 сценариев для барбера",
+price:990,
+description:"Сценарии для барберов: услуги, доверие и экспертность."
+},
+
+{
+id:"cafe",
+name:"CAFE",
+title:"30 сценариев для кафе",
+price:990,
+description:"Сценарии для блюд, атмосферы и привлечения клиентов."
+},
+
+{
+id:"expert",
+name:"EXPERT",
+title:"30 сценариев для эксперта",
+price:1490,
+description:"Экспертный контент без постоянного вопроса «что снять?»."
+}
+
+];
+
+
+let currentFilter = "all";
+
+
+/* =====================================
+   КЛИЕНТ
+===================================== */
+
+let customerToken =
+localStorage.getItem("davtim_customer_token");
+
+if(!customerToken){
+
+customerToken =
+crypto.randomUUID();
+
+localStorage.setItem(
+"davtim_customer_token",
+customerToken
+);
 
 }
 
 
-function showProduct(productName) {
+let currentOrder = null;
+let polling = null;
 
-    alert(
-        productName +
-        "\n\nСтраница покупки появится следующим этапом."
-    );
+
+/* =====================================
+   УТИЛИТЫ
+===================================== */
+
+function escapeHtml(value){
+
+return String(value ?? "")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
 
 }
+
+
+function getProduct(id){
+
+return PRODUCTS.find(
+product => product.id === id
+);
+
+}
+
+
+function closeModal(id){
+
+document
+.getElementById(id)
+.classList
+.remove("show");
+
+}
+
+
+/* =====================================
+   API
+===================================== */
+
+async function api(path,data={}){
+
+const response =
+await fetch(
+API_URL + path,
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(data)
+}
+);
+
+let result={};
+
+try{
+
+result =
+await response.json();
+
+}catch(e){}
+
+if(!response.ok){
+
+throw new Error(
+result.error ||
+"Ошибка сервера"
+);
+
+}
+
+return result;
+
+}
+
+
+/* =====================================
+   КАТАЛОГ
+===================================== */
+
+function setFilter(filter,button){
+
+currentFilter=filter;
+
+document
+.querySelectorAll(".filter")
+.forEach(
+b=>b.classList.remove("active")
+);
+
+button.classList.add("active");
+
+renderProducts();
+
+}
+
+
+function renderProducts(){
+
+const query =
+document
+.getElementById("search")
+.value
+.toLowerCase()
+.trim();
+
+const products =
+PRODUCTS.filter(product=>{
+
+const filterOk =
+currentFilter==="all" ||
+product.id===currentFilter;
+
+const searchOk =
+(
+product.name+
+" "+
+product.title+
+" "+
+product.description
+)
+.toLowerCase()
+.includes(query);
+
+return filterOk && searchOk;
+
+});
+
+
+document
+.getElementById("products")
+.innerHTML =
+
+products.map(product=>`
+
+<article class="card">
+
+<div class="card-label">
+${product.name}
+</div>
+
+<h3>
+${product.title}
+</h3>
+
+<p>
+${product.description}
+</p>
+
+<div class="price">
+${product.price.toLocaleString("ru-RU")} ₽
+</div>
+
+<div class="card-buttons">
+
+<button
+class="btn dark"
+onclick="showProduct('${product.id}')">
+Подробнее
+</button>
+
+<button
+class="btn"
+onclick="createOrder('${product.id}')">
+Купить
+</button>
+
+</div>
+
+</article>
+
+`).join("");
+
+}
+
+
+/* =====================================
+   ПРОДУКТ
+===================================== */
+
+function showProduct(id){
+
+const product =
+getProduct(id);
+
+document
+.getElementById("productContent")
+.innerHTML = `
+
+<div class="small-title">
+${product.name}
+</div>
+
+<h2>
+${product.title}
+</h2>
+
+<p>
+${product.description}
+</p>
+
+<div class="payment">
+
+<strong>
+Что внутри
+</strong>
+
+<p>
+30 готовых сценариев на месяц,
+идеи съёмки, текст на экране
+и финальный CTA.
+</p>
+
+</div>
+
+<button
+class="btn"
+onclick="
+closeModal('productModal');
+createOrder('${product.id}')
+">
+
+Купить за
+${product.price.toLocaleString("ru-RU")} ₽
+
+</button>
+
+`;
+
+document
+.getElementById("productModal")
+.classList
+.add("show");
+
+}
+
+
+/* =====================================
+   СОЗДАНИЕ ЗАКАЗА
+===================================== */
+
+async function createOrder(productId){
+
+const product =
+getProduct(productId);
+
+document
+.getElementById("orderContent")
+.innerHTML = `
+<div class="notice">
+Создаём заказ...
+</div>
+`;
+
+document
+.getElementById("orderModal")
+.classList
+.add("show");
+
+
+try{
+
+const result =
+await api(
+"/api/order/create",
+{
+product_id:productId,
+customer_token:customerToken
+}
+);
+
+
+currentOrder={
+
+id:
+result.order_id ||
+result.id,
+
+product:product,
+
+phone:
+result.payment_phone ||
+result.phone ||
+""
+
+};
+
+
+renderOrder();
+
+startPolling();
+
+
+}catch(error){
+
+document
+.getElementById("orderContent")
+.innerHTML = `
+
+<div class="error">
+Не удалось создать заказ.
+</div>
+
+<div class="notice">
+${escapeHtml(error.message)}
+</div>
+
+`;
+
+}
+
+}
+
+
+/* =====================================
+   ОКНО ЗАКАЗА
+===================================== */
+
+function renderOrder(){
+
+const order=currentOrder;
+
+document
+.getElementById("orderContent")
+.innerHTML = `
+
+<div class="small-title">
+${order.product.name}
+</div>
+
+<h2>
+Заказ создан
+</h2>
+
+<p>
+Номер заказа:
+<strong>
+${escapeHtml(order.id)}
+</strong>
+</p>
+
+<div class="payment">
+
+<strong>
+Оплата:
+${order.product.price.toLocaleString("ru-RU")} ₽
+</strong>
+
+<p>
+Перевод по номеру телефона на ВТБ.
+</p>
+
+<div class="phone">
+
+<code id="paymentPhone">
+${escapeHtml(order.phone || "Номер пока не настроен")}
+</code>
+
+<button
+class="btn"
+onclick="copyPhone()">
+Скопировать
+</button>
+
+</div>
+
+</div>
+
+
+<div
+id="orderStatus"
+class="notice">
+
+После перевода нажми
+«Я оплатил».
+
+Доступ выдаётся только
+после ручного подтверждения.
+
+</div>
+
+
+<button
+class="btn"
+onclick="markPaid()">
+
+Я оплатил
+
+</button>
+
+
+<div class="chat">
+
+<strong>
+Чат по заказу
+</strong>
+
+<div
+id="messages"
+class="messages">
+
+Загрузка...
+
+</div>
+
+<div class="chat-row">
+
+<input
+id="chatInput"
+placeholder="Напиши сообщение..."
+>
+
+<button
+class="btn"
+onclick="sendChat()">
+
+Отправить
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+loadMessages();
+
+}
+
+
+/* =====================================
+   КОПИРОВАНИЕ НОМЕРА
+===================================== */
+
+async function copyPhone(){
+
+const phone =
+currentOrder?.phone;
+
+if(!phone)return;
+
+try{
+
+await navigator
+.clipboard
+.writeText(phone);
+
+alert("Номер скопирован");
+
+}catch{
+
+alert(phone);
+
+}
+
+}
+
+
+/* =====================================
+   Я ОПЛАТИЛ
+===================================== */
+
+async function markPaid(){
+
+if(!currentOrder)return;
+
+try{
+
+await api(
+"/api/order/paid",
+{
+order_id:currentOrder.id,
+customer_token:customerToken
+}
+);
+
+
+document
+.getElementById("orderStatus")
+.innerHTML = `
+
+<span class="success">
+Оплата отмечена.
+Ожидаем ручного подтверждения.
+</span>
+
+`;
+
+}catch(error){
+
+document
+.getElementById("orderStatus")
+.innerHTML = `
+
+<span class="error">
+${escapeHtml(error.message)}
+</span>
+
+`;
+
+}
+
+}
+
+
+/* =====================================
+   СТАТУС ЗАКАЗА
+===================================== */
+
+async function checkOrder(){
+
+if(!currentOrder)return;
+
+try{
+
+const result =
+await api(
+"/api/order/info",
+{
+order_id:currentOrder.id,
+customer_token:customerToken
+}
+);
+
+const status =
+result.status ||
+(result.order &&
+result.order.status);
+
+
+if(status==="paid"){
+
+document
+.getElementById("orderStatus")
+.innerHTML = `
+
+<span class="success">
+Оплата подтверждена.
+Покупка доступна в разделе
+«Мои покупки».
+</span>
+
+`;
+
+loadPurchases();
+
+}
+
+}catch(e){}
+
+}
+
+
+/* =====================================
+   ЧАТ
+===================================== */
+
+async function loadMessages(){
+
+if(!currentOrder)return;
+
+try{
+
+const result =
+await api(
+"/api/chat/messages",
+{
+order_id:currentOrder.id,
+customer_token:customerToken
+}
+);
+
+const messages =
+result.messages ||
+result.data ||
+[];
+
+
+const box =
+document.getElementById("messages");
+
+if(!box)return;
+
+
+if(!messages.length){
+
+box.innerHTML = `
+<span style="color:#777">
+Сообщений пока нет.
+</span>
+`;
+
+return;
+
+}
+
+
+box.innerHTML =
+messages
+.map(message=>`
+
+<div class="message
+${message.sender==="customer"?"me":""}">
+
+<strong>
+${message.sender==="customer"
+?"Вы"
+:"DAVTIM"}
+</strong>
+
+<br>
+
+${escapeHtml(message.message)}
+
+</div>
+
+`)
+.join("");
+
+
+box.scrollTop =
+box.scrollHeight;
+
+
+}catch(e){}
+
+}
+
+
+async function sendChat(){
+
+if(!currentOrder)return;
+
+const input =
+document.getElementById("chatInput");
+
+const message =
+input.value.trim();
+
+if(!message)return;
+
+
+try{
+
+await api(
+"/api/chat/send",
+{
+order_id:currentOrder.id,
+customer_token:customerToken,
+message:message
+}
+);
+
+input.value="";
+
+loadMessages();
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+
+/* =====================================
+   АВТООБНОВЛЕНИЕ
+===================================== */
+
+function startPolling(){
+
+if(polling){
+
+clearInterval(polling);
+
+}
+
+polling =
+setInterval(
+()=>{
+
+loadMessages();
+
+checkOrder();
+
+},
+3000
+);
+
+}
+
+
+/* =====================================
+   ПОКУПКИ
+===================================== */
+
+async function loadPurchases(){
+
+const box =
+document.getElementById("purchasesList");
+
+try{
+
+const result =
+await api(
+"/api/purchases",
+{
+customer_token:customerToken
+}
+);
+
+const purchases =
+result.purchases ||
+result.orders ||
+result.data ||
+[];
+
+
+if(!purchases.length){
+
+box.innerHTML = `
+
+<div class="notice">
+Пока нет подтверждённых покупок.
+</div>
+
+`;
+
+return;
+
+}
+
+
+box.innerHTML =
+purchases
+.map(order=>`
+
+<div class="order">
+
+<strong>
+${escapeHtml(
+order.product_name ||
+order.name ||
+"Покупка"
+)}
+</strong>
+
+<p>
+Статус:
+${escapeHtml(order.status)}
+</p>
+
+${
+order.status==="paid"
+
+?
+
+`
+
+<button
+class="btn"
+onclick="
+downloadProduct('${escapeHtml(order.id)}')
+">
+
+Скачать ZIP
+
+</button>
+
+`
+
+:
+
+`
+
+<div class="notice">
+Ожидает подтверждения оплаты.
+</div>
+
+`
+
+}
+
+</div>
+
+`)
+.join("");
+
+
+}catch(error){
+
+box.innerHTML = `
+
+<div class="notice">
+Пока нет подтверждённых покупок.
+</div>
+
+`;
+
+}
+
+}
+
+
+/* =====================================
+   СКАЧИВАНИЕ
+===================================== */
+
+async function downloadProduct(orderId){
+
+try{
+
+const result =
+await api(
+"/api/download",
+{
+order_id:orderId,
+customer_token:customerToken
+}
+);
+
+
+const url =
+result.url ||
+result.download_url;
+
+
+if(url){
+
+window.location.href=url;
+
+}else{
+
+alert(
+"Ссылка на файл пока недоступна."
+);
+
+}
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+
+/* =====================================
+   АДМИН
+===================================== */
+
+function openAdmin(){
+
+document
+.getElementById("adminContent")
+.innerHTML = `
+
+<div class="small-title">
+ADMIN
+</div>
+
+<h2>
+Админ-панель
+</h2>
+
+<p>
+Введи пароль администратора.
+</p>
+
+<input
+id="adminPassword"
+type="password"
+placeholder="Пароль"
+style="
+width:100%;
+padding:14px;
+background:#080808;
+border:1px solid #333;
+color:white;
+border-radius:10px;
+">
+
+<br><br>
+
+<button
+class="btn"
+onclick="adminLogin()">
+
+Войти
+
+</button>
+
+`;
+
+document
+.getElementById("adminModal")
+.classList
+.add("show");
+
+}
+
+
+async function adminLogin(){
+
+const password =
+document
+.getElementById("adminPassword")
+.value;
+
+if(!password)return;
+
+
+try{
+
+const result =
+await api(
+"/api/admin/orders",
+{
+password:password
+}
+);
+
+sessionStorage
+.setItem(
+"davtim_admin_password",
+password
+);
+
+
+renderAdmin(
+result.orders ||
+result.data ||
+[]
+);
+
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+
+function renderAdmin(orders){
+
+document
+.getElementById("adminContent")
+.innerHTML = `
+
+<div class="small-title">
+ADMIN
+</div>
+
+<h2>
+Заказы
+</h2>
+
+<div>
+
+${
+orders.length
+
+?
+
+orders.map(order=>`
+
+<div class="order">
+
+<strong>
+№ ${escapeHtml(order.id)}
+</strong>
+
+<p>
+${escapeHtml(
+order.product_name
+)}
+</p>
+
+<p>
+${escapeHtml(order.price)} ₽
+</p>
+
+<p style="color:#888">
+Статус:
+${escapeHtml(order.status)}
+</p>
+
+<button
+class="btn"
+onclick="
+adminConfirm('${escapeHtml(order.id)}')
+">
+
+Подтвердить оплату
+
+</button>
+
+<button
+class="btn dark"
+onclick="
+adminReject('${escapeHtml(order.id)}')
+">
+
+Отклонить
+
+</button>
+
+</div>
+
+`).join("")
+
+:
+
+`<div class="notice">
+Заказов пока нет.
+</div>`
+
+}
+
+</div>
+
+`;
+
+}
+
+
+/* =====================================
+   ПОДТВЕРДИТЬ
+===================================== */
+
+async function adminConfirm(orderId){
+
+const password =
+sessionStorage
+.getItem(
+"davtim_admin_password"
+);
+
+try{
+
+await api(
+"/api/admin/confirm",
+{
+password:password,
+order_id:orderId
+}
+);
+
+adminReload();
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+
+/* =====================================
+   ОТКЛОНИТЬ
+===================================== */
+
+async function adminReject(orderId){
+
+const password =
+sessionStorage
+.getItem(
+"davtim_admin_password"
+);
+
+try{
+
+await api(
+"/api/admin/reject",
+{
+password:password,
+order_id:orderId
+}
+);
+
+adminReload();
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+
+async function adminReload(){
+
+const password =
+sessionStorage
+.getItem(
+"davtim_admin_password"
+);
+
+try{
+
+const result =
+await api(
+"/api/admin/orders",
+{
+password:password
+}
+);
+
+renderAdmin(
+result.orders ||
+result.data ||
+[]
+);
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+
+/* =====================================
+   СТАРТ
+===================================== */
+
+renderProducts();
+
+loadPurchases();
 
 </script>
 
 </body>
+</html>
